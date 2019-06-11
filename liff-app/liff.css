@@ -238,18 +238,49 @@ input[type=range][orient=vertical] {
     padding: 0 5px;
 }
 
-/* 左モーターの操作盤 */
-.left {
+
+.manual_zone {
+    background-color: gray;
     float: left;
+    width: 320px;
+    height: 40px;
+    margin: 10px 0 0 30px;
+}
+
+.left_rotate {
+    background-color: red;
+    float: left;
+    width: 80px;
+    height: 250px;
+    margin: 0 0 0 30px;
+
+    clear: left;
+}
+
+/* 前進/後退モーターの操作盤 */
+.forward_back {
+    background-color: blue;
+    float: left;
+    width: 100px;
+    height: 250px;
     margin: 0 0 0 30px;
 }
 
-/* 右モーターの操作盤 */
-.right {
-    margin: 0 0 0 200px;
+.right_rotate {
+    background-color: green;
+    float: left;
+    width: 80px;
+    height: 250px;
+    margin: 0 0 0 30px;
+    
+    vertical-align: middle;
 }
 
-.manual_zone {
-    margin: 80px 0 0 20px;
+.servo {
+    background-color: pink;
+    clear: both;
+
     float: left;
+    margin: 80px 0 0 20px;
+
 }

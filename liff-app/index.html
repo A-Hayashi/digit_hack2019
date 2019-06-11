@@ -51,26 +51,27 @@
     </p>
     <hr />
   </div>
-  <div>
-    <div class="left">
-      <div>左</div>
-      <input type="range" id="left_motor" min="-100" max="100" step="1" value="0" style="width:40px" orient="vertical">
-      <div id="left_value">0</div>
-    </div>
-    <div class='manual_zone'>
-      <div>モータ制御</div>
-      <input type="checkbox" name="manual">手動モード
-    </div>
-    <div class="right">
-      <div>右</div>
-      <input type="range" id="right_motor" min="-100" max="100" step="1" value="0" style="width:40px" orient="vertical">
-      <div id="right_value">0</div>
-    </div>
+  <div>モータ制御 </div>
+  <div class='manual_zone'>
+    <input type="checkbox" name="manual">手動モード
+  </div>
+  <div class="left_rotate">
+    <button type="button" id="left_rotate_motor">左回転</button>
+  </div>
+  <div class="forward_back">
+    <div>前進/後退</div>
+    <input type="range" id="forward_back_motor" min="-100" max="100" step="10" value="0" style="width:40px"
+      orient="vertical">
+    <div id="forward_back_value">0</div>
+  </div>
+  <div class="right_rotate">
+    <button type="button" id="right_rotate_motor">右回転</button>
   </div>
 
-  <hr />
 
-  <div>
+
+  <div class=servo>
+    <hr />
     サーボ制御
     <p>
       <span>0</span>

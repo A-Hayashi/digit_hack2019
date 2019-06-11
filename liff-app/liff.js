@@ -272,23 +272,30 @@ function liffToggleDeviceLedState(state) {
     });
 }
 
-// 左モータ
+// 前進/後退モータ
 window.addEventListener('load', function () {
-    var elem = document.getElementById('left_motor');
-    var target = document.getElementById('left_value');
+    var elem = document.getElementById('forward_back_motor');
+    var target = document.getElementById('forward_back_value');
     var rangeValue = function (elem, target) {
         return function (evt) {
-
             target.innerHTML = elem.value;
 
             //0 byte目：モータ制御コマンド [1]
             //1 byte目：モータNo [0, 1]
             //2 byte目：モータ回転速度 [-100～100]
-            var cmd = new Uint8Array([0x01, 0x00, elem.value]);
-            console.log(cmd);
+            var cmd_r = new Uint8Array([0x01, 0x00, elem.value]);
+            var cmd_l = new Uint8Array([0x01, 0x01, elem.value]);
+            console.log(cmd_r);
+            console.log(cmd_l);
 
             window.ledCharacteristic.writeValue(
-                cmd
+                cmd_r
+            ).catch(error => {
+                uiStatusError(makeErrorMsg(error), false);
+            });
+
+            window.ledCharacteristic.writeValue(
+                cmd_l
             ).catch(error => {
                 uiStatusError(makeErrorMsg(error), false);
             });
@@ -300,31 +307,91 @@ window.addEventListener('load', function () {
 })
 
 
-// 右モータ
+// 右回転
 window.addEventListener('load', function () {
-    var elem = document.getElementById('right_motor');
-    var target = document.getElementById('right_value');
-    var rangeValue = function (elem, target) {
-        return function (evt) {
-            target.innerHTML = elem.value;
+    var button = document.getElementById('right_rotate_motor');
 
-            //0 byte目：モータ制御コマンド [1]
-            //1 byte目：モータNo [0, 1]
-            //2 byte目：モータ回転速度 [-100～100]
-            var cmd = new Uint8Array([0x01, 0x01, elem.value]);
-            console.log(cmd);
+    button.addEventListener('mousedown', function () {
+        var cmd_r = new Uint8Array([0x01, 0x00, 100]);
+        var cmd_l = new Uint8Array([0x01, 0x01, -100]);
+        console.log(cmd_r);
+        console.log(cmd_l);
 
-            window.ledCharacteristic.writeValue(
-                cmd
-            ).catch(error => {
-                uiStatusError(makeErrorMsg(error), false);
-            });
-        }
-    }
-    elem.addEventListener('input', function () {
-        throttle(rangeValue(elem, target), 500)
+        window.ledCharacteristic.writeValue(
+            cmd_r
+        ).catch(error => {
+            uiStatusError(makeErrorMsg(error), false);
+        });
+
+        window.ledCharacteristic.writeValue(
+            cmd_l
+        ).catch(error => {
+            uiStatusError(makeErrorMsg(error), false);
+        });
+    });
+
+    button.addEventListener('mouseup', function () {
+        var cmd_r = new Uint8Array([0x01, 0x00, 0]);
+        var cmd_l = new Uint8Array([0x01, 0x01, 0]);
+        console.log(cmd_r);
+        console.log(cmd_l);
+
+        window.ledCharacteristic.writeValue(
+            cmd_r
+        ).catch(error => {
+            uiStatusError(makeErrorMsg(error), false);
+        });
+
+        window.ledCharacteristic.writeValue(
+            cmd_l
+        ).catch(error => {
+            uiStatusError(makeErrorMsg(error), false);
+        });
     });
 })
+
+window.addEventListener('load', function () {
+    var button = document.getElementById('left_rotate_motor');
+
+    button.addEventListener('mousedown', function () {
+        var cmd_r = new Uint8Array([0x01, 0x00, 100]);
+        var cmd_l = new Uint8Array([0x01, 0x01, -100]);
+        console.log(cmd_r);
+        console.log(cmd_l);
+
+        window.ledCharacteristic.writeValue(
+            cmd_r
+        ).catch(error => {
+            uiStatusError(makeErrorMsg(error), false);
+        });
+
+        window.ledCharacteristic.writeValue(
+            cmd_l
+        ).catch(error => {
+            uiStatusError(makeErrorMsg(error), false);
+        });
+    });
+
+    button.addEventListener('mouseup', function () {
+        var cmd_r = new Uint8Array([0x01, 0x00, 0]);
+        var cmd_l = new Uint8Array([0x01, 0x01, 0]);
+        console.log(cmd_r);
+        console.log(cmd_l);
+
+        window.ledCharacteristic.writeValue(
+            cmd_r
+        ).catch(error => {
+            uiStatusError(makeErrorMsg(error), false);
+        });
+
+        window.ledCharacteristic.writeValue(
+            cmd_l
+        ).catch(error => {
+            uiStatusError(makeErrorMsg(error), false);
+        });
+    });
+})
+
 
 // モータ制御 手動/自動
 window.addEventListener('load', function () {
