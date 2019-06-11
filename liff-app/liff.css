@@ -1,9 +1,10 @@
-body, table {
-  font-size: 14pt;
-  font-family: "Montserrat", sans-serif;
-  margin: 0pt;
-  text-align: center;
-  padding-top: 18pt;
+body,
+table {
+    font-size: 14pt;
+    font-family: "Montserrat", sans-serif;
+    margin: 0pt;
+    text-align: center;
+    padding-top: 18pt;
 }
 
 p {
@@ -19,9 +20,11 @@ p {
 }
 
 .btn-led-toggle {
-    box-shadow: 0 4pt 8pt 0 rgba(0,0,0,0.2), 0 3pt 10pt 0 rgba(0,0,0,0.19);
-    color: #f8f9fa; /* Light */
-    background-color: #6c757d; /* Gray */
+    box-shadow: 0 4pt 8pt 0 rgba(0, 0, 0, 0.2), 0 3pt 10pt 0 rgba(0, 0, 0, 0.19);
+    color: #f8f9fa;
+    /* Light */
+    background-color: #6c757d;
+    /* Gray */
     width: 160pt;
     font-weight: bold;
     height: 40pt;
@@ -31,12 +34,15 @@ p {
 
 .btn-led-toggle:active {
     transform: translateY(4pt);
-    box-shadow: 0 2pt 4pt 0 rgba(0,0,0,0.2), 0 1pt 5pt 0 rgba(0,0,0,0.19);
-    background-color: #6c757d; /* Gray */
+    box-shadow: 0 2pt 4pt 0 rgba(0, 0, 0, 0.2), 0 1pt 5pt 0 rgba(0, 0, 0, 0.19);
+    background-color: #6c757d;
+    /* Gray */
 }
 
-.led-on, .led-on:active {
-    background-color: #16C464; /* LINE Green */
+.led-on,
+.led-on:active {
+    background-color: #16C464;
+    /* LINE Green */
 }
 
 .btn-state {
@@ -44,28 +50,37 @@ p {
     border-radius: 4pt;
     margin-bottom: 8pt;
     width: 100pt;
-    border: 1pt solid #6c757d; /* Gray */
-    color: #6c757d; /* Gray */
-    background-color: #f8f9fa; /* Light */
+    border: 1pt solid #6c757d;
+    /* Gray */
+    color: #6c757d;
+    /* Gray */
+    background-color: #f8f9fa;
+    /* Light */
 }
 
-.btn-state:active, .pressed {
-    color: #343a40; /* Dark */
-    border: 1pt solid #343a40; /* Dark */
+.btn-state:active,
+.pressed {
+    color: #343a40;
+    /* Dark */
+    border: 1pt solid #343a40;
+    /* Dark */
     box-shadow: 0 2pt #666;
     transform: translateY(4pt);
 }
 
 .inactive {
-    color: #6c757d; /* Gray */
+    color: #6c757d;
+    /* Gray */
 }
 
 .success {
-    color: #16C464; /* LINE Green */
+    color: #16C464;
+    /* LINE Green */
 }
 
 .error {
-    color: #dc3545; /* Red */
+    color: #dc3545;
+    /* Red */
 }
 
 .hidden {
@@ -94,4 +109,147 @@ p {
     word-wrap: break-word;
     max-width: 200px;
     font-family: monospace, monospace;
+}
+
+/* WebKit・Blink向け 溝のスタイル */
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 12px;
+    cursor: pointer;
+    animate: 0.2s;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: #cccccc;
+    border-radius: 1.3px;
+    border: 1px solid #010101;
+}
+
+/* WebKit・Blink向け つまみのスタイル */
+input[type=range]::-webkit-slider-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    /* 以下は つまみの縦位置調整 */
+    margin-top: -14px;
+    /* (つまみの高さ - トラックの高さ) / 2 。つまみの高さは border を含む */
+}
+
+/* 何故か上の margin-top 指定が Edge に効いてしまうので、Edge向けに設定をリセット */
+@supports (-ms-ime-align: auto) {
+    input[type=range]::-webkit-slider-thumb {
+        margin-top: 0 !important;
+    }
+}
+
+/* WebKit・Blink向け focus時のスタイル */
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #999999;
+}
+
+/* Firefox向け 溝のスタイル */
+input[type=range]::-moz-range-track {
+    transform: rotate(90deg);
+    width: 100%;
+    height: 12px;
+    cursor: pointer;
+    animate: 0.2s;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: #cccccc;
+    border-radius: 1.3px;
+    border: 0.2px solid #010101;
+}
+
+/* Firefox向け つまみのスタイル */
+input[type=range]::-moz-range-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+/* Edge・IE向け 溝のスタイル */
+input[type=range]::-ms-track {
+    width: 100%;
+    height: 12px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: transparent;
+    border-color: transparent;
+    border-width: 16px 0;
+    color: transparent;
+}
+
+/* Edge・IE向け 溝の色（つまみより左側） */
+input[type=range]::-ms-fill-lower {
+    background: #cccccc;
+    border: 0.2px solid #010101;
+    border-radius: 2.6px;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+/* Edge・IE向け 溝の色（つまみより右側） */
+input[type=range]::-ms-fill-upper {
+    background: #cccccc;
+    border: 0.2px solid #010101;
+    border-radius: 2.6px;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+/* Edge・IE向け つまみのスタイル */
+input[type=range]::-ms-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+/* Edge・IE向け focus時の色（つまみより左側） */
+input[type=range]:focus::-ms-fill-lower {
+    background: #999999;
+}
+
+/* Edge・IE向け focus時の色（つまみより右側） */
+input[type=range]:focus::-ms-fill-upper {
+    background: #999999;
+}
+
+/* Edge・IE向け ポップアップを非表示に */
+input[type=range]::-ms-tooltip {
+    display: none;
+}
+
+input[type=range][orient=vertical] {
+    writing-mode: bt-lr;
+    /* IE */
+    -webkit-appearance: slider-vertical;
+    /* WebKit */
+    width: 8px;
+    height: 175px;
+    padding: 0 5px;
+}
+
+/* 左モーターの操作盤 */
+.left {
+    float: left;
+    margin: 0 0 0 30px;
+}
+
+/* 右モーターの操作盤 */
+.right {
+    margin: 0 0 0 200px;
+}
+
+.manual_zone {
+    margin: 80px 0 0 20px;
+    float: left;
 }

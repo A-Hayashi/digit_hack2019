@@ -52,24 +52,24 @@
     <hr />
   </div>
   <div>
-    モータ制御
-    <p>
+    <div class="left">
+      <div>左</div>
+      <input type="range" id="left_motor" min="-100" max="100" step="1" value="0" style="width:40px" orient="vertical">
+      <div id="left_value">0</div>
+    </div>
+    <div class='manual_zone'>
+      <div>モータ制御</div>
       <input type="checkbox" name="manual">手動モード
-    </p>
-    <p>
-      <span>左</span>
-      <input type="range" id="left_motor" min="-100" max="100" step="1" value="0" style="width:200px">
-      <span id="left_value">0</span>
-    </p>
-    <p>
-      <span>右</span>
-      <input type="range" id="right_motor" min="-100" max="100" step="1" value="0" style="width:200px">
-      <span id="right_value">0</span>
-    </p>
+    </div>
+    <div class="right">
+      <div>右</div>
+      <input type="range" id="right_motor" min="-100" max="100" step="1" value="0" style="width:40px" orient="vertical">
+      <div id="right_value">0</div>
+    </div>
   </div>
 
   <hr />
-  
+
   <div>
     サーボ制御
     <p>
@@ -89,7 +89,6 @@
     </p>
 
   </div>
-
 
 
 </body>
