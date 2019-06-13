@@ -85,18 +85,30 @@ void loop()
   ExecLineThingdCmd(write_cmd);
 }
 
-void ExecUartCmdCallback(uint8_t motor, int speed)
+void ExecUartCmdCallback(uint8_t cmd, uint8_t a, int b)
 {
-  if (motor_control_mode == MOTOR_CONTROL_AUTO)
-  {
-    // Serial.print("motor: ");
-    // Serial.print(motor);
-    // Serial.print("\tspeed: ");
-    // Serial.println(speed);
+  // Serial.print("motor: ");
+  // Serial.print(motor);
+  // Serial.print("\tspeed: ");
+  // Serial.println(speed);
 
-    uint8_t _speed;
-    _speed = (uint8_t)speed;
-    cmd_motor(motor, _speed);
+  if (cmd == 'm')
+  {
+    if (motor_control_mode == MOTOR_CONTROL_AUTO)
+    {
+      uint8_t motor = a;
+      uint8_t speed = (uint8_t)b;
+      cmd_motor(motor, speed);
+      motor_control_onboard(motor, speed);
+    }
+  }
+
+  if (cmd == 's')
+  {
+    uint8_t servo = a;
+    uint8_t angle = (uint8_t)b;
+    cmd_servo(servo, angle, 30);
+    servo_control_onboard(servo, angle, 30);
   }
 }
 

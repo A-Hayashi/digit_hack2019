@@ -5,6 +5,6 @@
 
 void ExecUartCmd();
 
-void ExecUartCmdCallback(uint8_t motor, int speed);
+void ExecUartCmdCallback(uint8_t cmd, uint8_t a, int b);
 
 #endif

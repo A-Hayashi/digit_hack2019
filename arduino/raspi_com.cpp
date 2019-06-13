@@ -46,7 +46,17 @@ void ExecUartCmd()
       if (Buffer[2] == ':')
       {
         int speed = strToInt(&Buffer[3]);
-        ExecUartCmdCallback(motor, speed);
+        ExecUartCmdCallback('m', motor, speed);
+      }
+    }
+
+    if (Buffer[0] == 's')
+    {
+      uint8_t servo = strToInt(&Buffer[1]);
+      if (Buffer[2] == ':')
+      {
+        int angle = strToInt(&Buffer[3]);
+        ExecUartCmdCallback('s', servo, angle);
       }
     }
   }
