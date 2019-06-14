@@ -51,30 +51,8 @@ static uint8_t write_cmd[100];
 static motor_control_mode_t motor_control_mode = MOTOR_CONTROL_AUTO;
 static void ExecLineThingdCmd(uint8_t *write_cmd);
 
-uint8_t angle_target = 90;
-uint8_t angle = 90;
-
-SoftwareTimer servo_timer;
-
-// Callback for buzzer control @1khz
-void servoEvent(TimerHandle_t xTimerID) {
-  if(angle_target!=angle){
-    if(angle_target>angle){
-      angle++;
-    }else{
-      angle--;
-    }
-  }
-}
-
-void servoTimerStart() {
-  servo_timer.begin(100, servoEvent);
-  servo_timer.start();
-}
-
 void setup()
 {
-  servoTimerStart();
   pinMode(LED1, OUTPUT);
   digitalWrite(LED1, 0);
   pinMode(BUTTON, INPUT_PULLUP);
@@ -180,8 +158,7 @@ static void ExecLineThingdCmd(uint8_t *write_cmd)
         uint8_t motor_no = data[1];
         uint8_t speed = data[2];
 
-        if(1)
-        // if ((motor_no != motor_no_old) || (speed != speed_old))
+        if ((motor_no != motor_no_old) || (speed != speed_old))
         {
           cmd_motor(motor_no, speed);
           motor_control_onboard(motor_no, speed);
@@ -196,14 +173,13 @@ static void ExecLineThingdCmd(uint8_t *write_cmd)
       if (len != 4)
         break;
       uint8_t servo_no = data[1];
-      angle_target = data[2];
+      uint8_t angle = data[2];
       uint8_t speed = data[3];
       static uint8_t servo_no_old = 0xff;
       static uint8_t angle_old = 0xff;
       static uint8_t speed_old = 0xff;
 
-      if(1)
-      // if ((servo_no_old != servo_no) || (angle_old != angle) || (speed_old != speed))
+      if ((servo_no_old != servo_no) || (angle_old != angle) || (speed_old != speed))
       {
         cmd_servo(servo_no, angle, speed);
         servo_control_onboard(servo_no, angle, speed);

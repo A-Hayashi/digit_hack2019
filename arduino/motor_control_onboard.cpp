@@ -25,8 +25,18 @@
 #define PWM0_COUNTERTOP 16000
 #define PWM1_COUNTERTOP 20000
 
+typedef struct
+{
+  uint8_t target_angle;
+  uint8_t current_angle;
+  uint8_t speed;
+} servo_ctrl_t;
+
 static uint16_t pwm0_seq[4];
 static uint16_t pwm1_seq[4];
+
+static servo_ctrl_t servo_ctrl[] = {{90, 90, 0}, {90, 90, 0}, {90, 90, 0}, {90, 90, 0}};
+static SoftwareTimer servo_timer;
 
 static void start_pwm0(void);
 static uint32_t calc_pwm0_comp(uint8_t duty);
@@ -35,6 +45,10 @@ static void set_pwm0_duty(uint8_t pin, uint8_t duty);
 static void start_pwm1(void);
 static uint32_t calc_pwm1_comp(uint8_t angle);
 static void set_pwm1_duty(uint8_t pin, uint8_t duty);
+
+static void servo_write(uint8_t servo, uint8_t angle);
+static void servoEvent(TimerHandle_t xTimerID);
+static void servoTimerStart();
 
 static void start_pwm0(void)
 {
@@ -189,6 +203,8 @@ void motor_onboard_init(void)
 
   start_pwm0();
   start_pwm1();
+
+  servoTimerStart();
 }
 
 void servo_control_onboard(uint8_t servo, uint8_t angle, uint8_t speed)
@@ -201,22 +217,8 @@ void servo_control_onboard(uint8_t servo, uint8_t angle, uint8_t speed)
   Serial.print(speed);
   Serial.println("");
 
-  if (servo == 0)
-  {
-    set_pwm1_duty(SERVO0_PIN, angle);
-  }
-  else if (servo == 1)
-  {
-    set_pwm1_duty(SERVO1_PIN, angle);
-  }
-  else if (servo == 2)
-  {
-    set_pwm1_duty(SERVO2_PIN, angle);
-  }
-  else if (servo == 3)
-  {
-    set_pwm1_duty(SERVO3_PIN, angle);
-  }
+  servo_ctrl[servo].target_angle = angle;
+  servo_ctrl[servo].speed = speed;
 }
 
 void motor_control_onboard(uint8_t motor, uint8_t speed)
@@ -265,4 +267,47 @@ void motor_control_onboard(uint8_t motor, uint8_t speed)
       set_pwm0_duty(B_IB_PIN, -_speed);
     }
   }
+}
+
+static void servo_write(uint8_t servo, uint8_t angle)
+{
+  if (servo == 0)
+  {
+    set_pwm1_duty(SERVO0_PIN, angle);
+  }
+  else if (servo == 1)
+  {
+    set_pwm1_duty(SERVO1_PIN, angle);
+  }
+  else if (servo == 2)
+  {
+    set_pwm1_duty(SERVO2_PIN, angle);
+  }
+  else if (servo == 3)
+  {
+    set_pwm1_duty(SERVO3_PIN, angle);
+  }
+};
+
+static void servoEvent(TimerHandle_t xTimerID)
+{
+  for (int i; i < sizeof(servo_ctrl) / sizeof(servo_ctrl[0]); i++)
+  {
+    if (servo_ctrl[i].target_angle > servo_ctrl[i].current_angle)
+    {
+      servo_ctrl[i].current_angle++;
+      servo_write(i, servo_ctrl[i].current_angle);
+    }
+    else if (servo_ctrl[i].target_angle < servo_ctrl[i].current_angle)
+    {
+      servo_ctrl[i].current_angle--;
+      servo_write(i, servo_ctrl[i].current_angle);
+    }
+  }
+}
+
+static void servoTimerStart()
+{
+  servo_timer.begin(50, servoEvent);
+  servo_timer.start();
 }
