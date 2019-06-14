@@ -14,8 +14,8 @@ weight_map = np.zeros(tile_num_x*tile_num_y)
 weight_img = np.zeros((height,width), np.uint8)
 sub_weight = 5
 
-#ƒAƒXƒyƒNƒg”ä‚SF‚R
-#ƒ^ƒCƒ‹“à‚Ì•`‰æƒsƒNƒZƒ‹”‚Åd‚İ•t‚¯A‘å‚«‚È‚ÌƒmƒCƒY‚Íƒ^ƒCƒ‹‚ÌƒTƒCƒY‚Å’²®
+#ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ï¼”ï¼šï¼“
+#ã‚¿ã‚¤ãƒ«å†…ã®æç”»ãƒ”ã‚¯ã‚»ãƒ«æ•°ã§é‡ã¿ä»˜ã‘ã€å¤§ããªã®ãƒã‚¤ã‚ºã¯ã‚¿ã‚¤ãƒ«ã®ã‚µã‚¤ã‚ºã§èª¿æ•´
 def main():
     tile_list = make_tile_list()
     print
@@ -37,7 +37,7 @@ def main():
         fgbg = cv2.BackgroundSubtractorMOG()
         diff_frame = fgbg.apply(frame)
         diff_frame = fgbg.apply(next_frame)
-        #--”’‚É•`‰æ‚³‚ê‚½”ÍˆÍ‚Ì’†S‚ğ‹‚ß‚é------------------------
+        #--ç™½ã«æç”»ã•ã‚ŒãŸç¯„å›²ã®ä¸­å¿ƒã‚’æ±‚ã‚ã‚‹------------------------
         conditions = (diff_frame[:,:]>254)*1
         #sum_item = np.sum(conditions)
         #if(sum_item != 0):
@@ -48,7 +48,7 @@ def main():
         #    mean_y = np.sum([temp * condition for condition in conditions])//sum_item
         #    cv2.circle(frame, (mean_y, mean_x),15, (255,0,0), 2)
         ##-----------------------------------------------------------
-        #ƒAƒCƒfƒA‚PFƒgƒ‰ƒbƒJ[‚Ì”ÍˆÍw’è‚Í‚µ‚«‚¢’l‚æ‚è‘½‚¢ƒ^ƒCƒ‹‚Ì”‚É‚æ‚èŒˆ’è
+        #ã‚¢ã‚¤ãƒ‡ã‚¢ï¼‘ï¼šãƒˆãƒ©ãƒƒã‚«ãƒ¼ã®ç¯„å›²æŒ‡å®šã¯ã—ãã„å€¤ã‚ˆã‚Šå¤šã„ã‚¿ã‚¤ãƒ«ã®æ•°ã«ã‚ˆã‚Šæ±ºå®š
         
         frame = draw_weight(conditions, tile_list, frame)
        
@@ -78,8 +78,8 @@ def main():
 
 def make_tile_list():
     '''
-    target‚ğ•ªŠ„‚µA‚»‚ÌƒŠƒXƒg‚ğ•Ô‚µ‚Ü‚·
-    tile_num‚Í•ªŠ„”‚Å‚ ‚èA‘æˆêˆø”‚ª‚˜²•ûŒüA‘æ“ñˆø”‚ª‚™²•ûŒü
+    targetã‚’åˆ†å‰²ã—ã€ãã®ãƒªã‚¹ãƒˆã‚’è¿”ã—ã¾ã™
+    tile_numã¯åˆ†å‰²æ•°ã§ã‚ã‚Šã€ç¬¬ä¸€å¼•æ•°ãŒï½˜è»¸æ–¹å‘ã€ç¬¬äºŒå¼•æ•°ãŒï½™è»¸æ–¹å‘
     '''
     
     tile_list = []
