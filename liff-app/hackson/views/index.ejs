@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+
+    <meta charset='utf-8'>
+
+    <title>hackson</title>
+
+    <link rel='stylesheet' href='stylesheets/hackson.css'>
+
+    <script type='text/javascript' src='javascripts/hackson.js'></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/1.4.3/eruda.min.js"></script>
+
+    <!-- LIFF SDK の読み込み -->
+
+    <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+
+    <script type='text/javascript' src='javascripts/liff.js'></script>
+
+    <link rel='stylesheet' href='stylesheets/liff.css'>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+  </head>
+
+  <body>
+
+  <div class='main'>
+
+      <h1 class='header'>TEBURA</h1>
+
+      <div class="futa-wrap">
+
+        <div id='lid_open' class='open' ontouchstart='' onclick='get_profile();' user_name='' user_id=''>開く</div>
+
+        <div id='lid_close' class='close' ontouchstart='' onclick='send_message();'>閉める</div>
+
+      </div>
+
+      <div class="icon-wrap">
+
+        <div class='slack' ontouchstart='' onclick='slack_message();'><svg width="54" height="54" style="transform:scale(2.0); -webkit-transform:scale(2.0); -moz-transform:scale(2.0); -ms-transform:scale(2.0); -o-transform:scale(2.0);" class="c-nav--footer__svgicon c-slackhash" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M19.712.133a5.381 5.381 0 0 0-5.376 5.387 5.381 5.381 0 0 0 5.376 5.386h5.376V5.52A5.381 5.381 0 0 0 19.712.133m0 14.365H5.376A5.381 5.381 0 0 0 0 19.884a5.381 5.381 0 0 0 5.376 5.387h14.336a5.381 5.381 0 0 0 5.376-5.387 5.381 5.381 0 0 0-5.376-5.386" fill="#36C5F0"></path><path d="M53.76 19.884a5.381 5.381 0 0 0-5.376-5.386 5.381 5.381 0 0 0-5.376 5.386v5.387h5.376a5.381 5.381 0 0 0 5.376-5.387m-14.336 0V5.52A5.381 5.381 0 0 0 34.048.133a5.381 5.381 0 0 0-5.376 5.387v14.364a5.381 5.381 0 0 0 5.376 5.387 5.381 5.381 0 0 0 5.376-5.387" fill="#2EB67D"></path><path d="M34.048 54a5.381 5.381 0 0 0 5.376-5.387 5.381 5.381 0 0 0-5.376-5.386h-5.376v5.386A5.381 5.381 0 0 0 34.048 54m0-14.365h14.336a5.381 5.381 0 0 0 5.376-5.386 5.381 5.381 0 0 0-5.376-5.387H34.048a5.381 5.381 0 0 0-5.376 5.387 5.381 5.381 0 0 0 5.376 5.386" fill="#ECB22E"></path><path d="M0 34.249a5.381 5.381 0 0 0 5.376 5.386 5.381 5.381 0 0 0 5.376-5.386v-5.387H5.376A5.381 5.381 0 0 0 0 34.25m14.336-.001v14.364A5.381 5.381 0 0 0 19.712 54a5.381 5.381 0 0 0 5.376-5.387V34.25a5.381 5.381 0 0 0-5.376-5.387 5.381 5.381 0 0 0-5.376 5.387" fill="#E01E5A"></path></g></svg></div>
+
+        <div class='center'><a id="modal-open">【クリック】</a></div>
+
+        <div class='rank' ontouchstart=''><a href='/users'><img src="images/rank.png" alt=""></a></div>
+
+      </div>
+
+      <div class="ctl-wrap">
+
+        <div class="ctl-nest01">
+
+            <div class="ctl-child ctl-child01">
+
+              <input type="range" id="left_motor" min="-100" max="100" step="10" value="0" orient="vertical">
+
+              <div id="left_value">0</div>
+
+            </div>
+
+            
+
+            <div class="ctl-child ctl-child02">
+
+              <input type="range" id="right_motor" min="-100" max="100" step="10" value="0" orient="vertical">
+
+              <div id="right_value">0</div>
+
+            </div>
+
+        </div>
+
+        <div class="ctl-nest02">
+
+          <div class='manual_zone'>
+
+            <div class='motor_text'>モータ制御</div>
+
+            <label for="manul">
+
+              <input type="checkbox" id="manual">手動モード
+
+            </label>
+
+          </div>
+          <div class="status-wrap">
+
+            <img id="loading-animation" class="" src="loading.gif" height="14px" />
+
+            <span id="status" class="inactive">Device disconnected</span>
+
+          </div>
+
+        </div>
+
+  <div id="controls" class="hidden">
+  
+    <!-- Device Info Table -->
+
+    <table class="device-info-table">
+
+      <tr>
++33333333333333333333333
+
+
+
+
+9-----------------------y
+        <th class="device-info-cell device-info-key">Name</th>
+
+        <td class="device-info-cell device-info-val" id="device-name"></td>
+
+      </tr>w
+
+      <tr>
+
+        <th class="device-info-cell device-info-key">ID</th>
+
+        <td class="device-info-cell device-info-val" id="device-id"></td>
+
+      </tr>
+
+      <tr>
+
+        <th class="device-info-cell device-info-key">PSDI</th>
+
+        <td class="device-info-cell device-info-val" id="device-psdi"></td>
+
+      </tr>
+
+      <tr>
+
+        <th class="device-info-cell device-info-key">Button state</th>
+
+        <td class="device-info-cell device-info-val">
+
+          <button id="btn-state" class="btn btn-state" disabled>Released</button>
+
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <th class="device-info-cell device-info-key">Click count</th>
+
+        <td class="device-info-cell device-info-val" id="click-count">0</td>
+
+      </tr>
+
+    </table>
+
+    <hr />
+
+        <button id="btn-led-toggle" class="btn btn-led-toggle" onclick="handlerToggleLed()">LED</button>
+
+      </div>
+
+  <div>
+
+    <!-- <script type="text/javascript" charset="utf-8">
+
+    // <div id="target">...</div>などの要素にタッチイベントを設定
+
+    document.getElementById( "target" ).addEventListener( "touchstart", function( event ) {
+
+      var touchObject = event.changedTouches[0] ;
+
+      var touchX = touchObject.pageX ;
+
+      var touchY = touchObject.pageY ;
+
+  
+
+      // 要素の位置を取得
+
+      var clientRect = this.getBoundingClientRect() ;
+
+      var positionX = clientRect.left + window.pageXOffset ;
+
+      var positionY = clientRect.top + window.pageYOffset ;
+
+    
+
+      // 要素内におけるタッチ位置を計算
+
+      var x = touchX - positionX ;
+
+      var y = touchY - positionY ;
+
+    } ) ;
+
+    </script> -->
+    <script type="text/javascript" charset="utf-8">
+      $(function(){
+       $("#modal-open").click(function(){
+            //body内の最後に<div id="modal-bg"></div>を挿入
+           $("body").append('<div id="modal-bg"></div>');
+      
+          //モーダルウィンドウを表示
+              $("#modal-bg,#modal-main").fadeIn("slow");
+       
+          //画面のどこかをクリックしたらモーダルを閉じる
+            $("#modal-bg,#modal-main").click(function(){
+                $("#modal-main,#modal-bg").fadeOut("slow",function(){
+               //挿入した<div id="modal-bg"></div>を削除
+                    $('#modal-bg').remove() ;
+               });
+            });
+         });
+      });
+      </script>
+  </div>
+
+  </body>
+
+</html>

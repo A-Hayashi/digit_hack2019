@@ -1,0 +1,6 @@
+{
+    "board": "adafruit:nrf52:feather52832",
+    "configuration": "softdevice=s132v6,debug=l0",
+    "port": "COM31",
+    "sketch": "arduino.ino"
+}
