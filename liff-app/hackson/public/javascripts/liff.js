@@ -389,7 +389,6 @@ window.addEventListener('load', function () {
             //1 byte目：モータ制御モード[0:自動, 1:手動]
             var cmd = new Uint8Array([0x03, 0x01]);
             console.log(cmd);
-            document.addEventListener('touchmove', handleTouchMove, { passive: false });
             console.log("scroll lock");
         } else {
             // Checkbox is not checked..
@@ -398,7 +397,6 @@ window.addEventListener('load', function () {
             //1 byte目：モータ制御モード[0:自動, 1:手動]
             var cmd = new Uint8Array([0x03, 0x00]);
             console.log(cmd);
-            document.removeEventListener('touchmove', handleTouchMove, { passive: false }); 
             console.log("scroll unlock");
         }
         window.ledCharacteristic.writeValue(
