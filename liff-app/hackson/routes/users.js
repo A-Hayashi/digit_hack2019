@@ -42,7 +42,7 @@ router.get('/update', function(req, res, next) {
         // 新規データとして登録
         client.query("insert into score (user_id, user_name, score) values ('" + user_id + "', '" + user_name + "', 1);");
       }
-      res.redirect('../');
+      // res.redirect('../');
     });
   });
 });
