@@ -62,10 +62,10 @@ function get_profile() {
   var user_id_list = ['U000', 'U111' ,'U222' ,'U333' ,'U444' ,'U555' ,'U666' ,'U777' ,'U888' ,'U999'];
   var idx = getRandomInt(user_name_list.length);
 
-  var user_name = user_name_list[idx];
-  var user_id = user_id_list[idx];
-  location.href = '/users/update?user_id=' + user_id + '&user_name=' + user_name;
-  return;
+    // var user_name = user_name_list[idx];
+    // var user_id = user_id_list[idx];
+    // location.href = '/users/update?user_id=' + user_id + '&user_name=' + user_name;
+    // return;
 
     // liff.getProfile(function (data) {}の書き方うまくいかない、非同期通信だから？liff.init()は両方いけるぽい
     liff.getProfile().then(profile => {
@@ -73,6 +73,8 @@ function get_profile() {
       // うまく飛ばせるようになる
       // var user_name = profile.displayName;
       // var user_id = profile.userId;
+
+      // console.log(profile);
       var user_name = profile.displayName;
       var user_id = profile.userId;
       /*

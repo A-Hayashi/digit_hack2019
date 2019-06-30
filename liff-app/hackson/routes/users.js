@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
   // view側、posgreSqlは result.rows.length、rowsを使う必要がある。
   client.connect(function(err) {
     client.query('select * from score order by score desc;', function(err, result) {
-      console.log(result);
+      // console.log(result);
       res.render('users', { result: result});
     });
   });

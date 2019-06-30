@@ -26,6 +26,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const favicon = require('express-favicon');
+app.use(favicon(path.join(__dirname, 'public/images/favicon.ico')));
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 // line botの応答インタフェース
