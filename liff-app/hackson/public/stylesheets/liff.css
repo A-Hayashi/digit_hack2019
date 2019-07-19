@@ -583,43 +583,6 @@ input[type=range][orient=vertical]
 }
 
 
-
-/* 左モーターの操作盤 */
-
-
-
-.left {
-
-  float:left;
-
-  margin: 0 0 0 5%; 
-
-  font-size: 3em;
-
-  transform: rotate(90deg);
-
-}
-
-
-
-/* 右モーターの操作盤 */
-
-
-
-.right {
-
-  font-size: 3em;
-
-  margin-right: 5%;
-
-  float:right;
-
-  transform: rotate(90deg);
-
-}
-
-
-
 .ctl-nest01{
 
   display: flex;
@@ -646,8 +609,6 @@ input[type=range][orient=vertical]
 
 .ctl-child{
 
-  transform: rotate(90deg);
-
   height: 20%;
 
   position: abusolute;
@@ -656,17 +617,19 @@ input[type=range][orient=vertical]
 
 .ctl-child01{
 
+  transform: rotate(90deg);
+  
   position: relative;
 
   top: 30%;
-
+  
 }
 
 .ctl-child02{
 
   position: relative;
 
-  top: 30%;
+  top: 0%;
 
 }
 
@@ -694,7 +657,7 @@ input[type=range][orient=vertical]
 
 
 
-div#right_value, div#left_value{
+div#right_value, div#throttle_value{
 
   transform: rotate(-90deg);
 

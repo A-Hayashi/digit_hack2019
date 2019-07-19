@@ -37,12 +37,12 @@ def turn_left(ser):
     ser.write('m1:-100\n'.encode())
 
 def forward(ser):
-    ser.write('m0:100\n'.encode())
-    ser.write('m1:100\n'.encode())
+    ser.write('m0:90\n'.encode())
+    ser.write('m1:90\n'.encode())
 
 def backward(ser):
-    ser.write('m0:-100\n'.encode())
-    ser.write('m1:-100\n'.encode())
+    ser.write('m0:-90\n'.encode())
+    ser.write('m1:-90\n'.encode())
 
 def tracking():
     global g_radius
@@ -58,6 +58,8 @@ def tracking():
     state = 0x00
 
     while True:
+        time.sleep(0.1)
+
         pygame.event.pump()
         key = pygame.key.get_pressed()
 
@@ -107,7 +109,6 @@ def tracking():
                 diff = x - IMAGE_WIDTH/2
             
                 print(diff)
-                time.sleep(0.1)
                 if diff > 10:
                     turn_right(ser)
                     time.sleep(0.04)

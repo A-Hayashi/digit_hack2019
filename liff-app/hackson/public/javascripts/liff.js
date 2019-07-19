@@ -272,23 +272,31 @@ function liffToggleDeviceLedState(state) {
     });
 }
 
-// 左モータ
+// スロットル
 window.addEventListener('load', function () {
-    var elem = document.getElementById('left_motor');
-    var target = document.getElementById('left_value');
+    var elem = document.getElementById('throttle');
+    var target = document.getElementById('throttle_value');
     var rangeValue = function (elem, target) {
         return function (evt) {
 
-            target.innerHTML = elem.value;
+            target.innerHTML = -elem.value;
 
             //0 byte目：モータ制御コマンド [1] 固定
             //1 byte目：モータNo [0, 1]　
             //2 byte目：モータ回転速度 [-100～100]
-            var cmd = new Uint8Array([0x01, 0x00, elem.value]);
-            console.log(cmd);
+            var cmd_l = new Uint8Array([0x01, 0x00, -elem.value]);
+            var cmd_r = new Uint8Array([0x01, 0x01, -elem.value]);
+            console.log(cmd_l);
+            console.log(cmd_r);
 
             window.ledCharacteristic.writeValue(
-                cmd
+                cmd_l
+            ).catch(error => {
+                uiStatusError(makeErrorMsg(error), false);
+            });
+
+            window.ledCharacteristic.writeValue(
+                cmd_r
             ).catch(error => {
                 uiStatusError(makeErrorMsg(error), false);
             });
@@ -298,43 +306,6 @@ window.addEventListener('load', function () {
         throttle(rangeValue(elem, target), 500)
     });
 })
-
-
-// 右モータ
-window.addEventListener('load', function () {
-    var elem = document.getElementById('right_motor');
-    var target = document.getElementById('right_value');
-    var rangeValue = function (elem, target) {
-        return function (evt) {
-            target.innerHTML = elem.value;
-
-            //0 byte目：モータ制御コマンド [1]
-            //1 byte目：モータNo [0, 1]
-            //2 byte目：モータ回転速度 [-100～100]
-            var cmd = new Uint8Array([0x01, 0x01, elem.value]);
-            // var cmd2 = new Uint8Array([0x01, 0x00, -elem.value]);
-            console.log(cmd);
-            // console.log(cmd2);
-
-            window.ledCharacteristic.writeValue(
-                cmd
-            ).catch(error => {
-                uiStatusError(makeErrorMsg(error), false);
-            });
-            /*    
-            window.ledCharacteristic.writeValue(
-                cmd2
-            ).catch(error => {
-                uiStatusError(makeErrorMsg(error), false);
-            });
-            */
-        }
-    }
-    elem.addEventListener('input', function () {
-        throttle(rangeValue(elem, target), 500)
-    });
-})
-
 
 function handleTouchMove(event) {
     event.preventDefault();
@@ -370,15 +341,12 @@ window.addEventListener('load', function () {
     checkbox.addEventListener('change', function () {
         // 値を書き換え
         throttle(rangeValue(checkbox), 500);
-        var right_motor = document.getElementById('right_motor');
-        var right_value = document.getElementById('right_value');
-        var left_motor = document.getElementById('left_motor');
-        var left_value = document.getElementById('left_value');
+        var throttle_range = document.getElementById('throttle');
+        var throttle_value = document.getElementById('throttle_value');
+
         // 画面上の値も0にする
-        right_motor.value = 0;
-        right_value.innerHTML = 0;
-        left_motor.value = 0;
-        left_value.innerHTML = 0;
+        throttle_range.value = 0;
+        throttle_value.innerHTML = 0;
     });
 
     checkbox.addEventListener('change', function () {
@@ -416,7 +384,7 @@ window.addEventListener('load', function () {
              //1 byte目：サーボNo [0～2]
              //2 byte目：サーボ角度 [0度～180度]
              //3 byte目：サーボ回転速度 [0～100]
-             var cmd = new Uint8Array([0x02, 0x00, 90, 1]);
+             var cmd = new Uint8Array([0x02, 0x02, 90, 1]);
              console.log(cmd);
  
              window.ledCharacteristic.writeValue(
@@ -442,7 +410,7 @@ window.addEventListener('load', function () {
             //1 byte目：サーボNo [0～2]
             //2 byte目：サーボ角度 [0度～180度]
             //3 byte目：サーボ回転速度 [0～100]
-            var cmd = new Uint8Array([0x02, 0x00, 150, 1]);
+            var cmd = new Uint8Array([0x02, 0x02, 150, 1]);
             console.log(cmd);
 
             window.ledCharacteristic.writeValue(
@@ -457,6 +425,107 @@ window.addEventListener('load', function () {
     });
 
 })
+
+//左旋回
+window.addEventListener('load', function () {
+    var elem = document.getElementById('lid_left_rotate');
+    var rangeValue = function (elem) {
+        return function (evt) {
+            //0 byte目：モータ制御コマンド [1] 固定
+            //1 byte目：モータNo [0, 1]　
+            //2 byte目：モータ回転速度 [-100～100]
+            var cmd_l = new Uint8Array([0x01, 0x00, 90]);
+            var cmd_r = new Uint8Array([0x01, 0x01, -90]);
+            console.log(cmd_l);
+            console.log(cmd_r);
+
+            window.ledCharacteristic.writeValue(
+                cmd_l
+            ).catch(error => {
+                uiStatusError(makeErrorMsg(error), false);
+            });
+
+            window.ledCharacteristic.writeValue(
+                cmd_r
+            ).catch(error => {
+                uiStatusError(makeErrorMsg(error), false);
+            });
+        }
+    }
+    elem.addEventListener('click', function () {
+        throttle(rangeValue(elem), 500)
+    });
+})
+ 
+//右旋回
+window.addEventListener('load', function () {
+    var elem = document.getElementById('lid_right_rotate');
+    var rangeValue = function (elem) {
+        return function (evt) {
+            //0 byte目：モータ制御コマンド [1] 固定
+            //1 byte目：モータNo [0, 1]　
+            //2 byte目：モータ回転速度 [-100～100]
+            var cmd_l = new Uint8Array([0x01, 0x00, -90]);
+            var cmd_r = new Uint8Array([0x01, 0x01, 90]);
+            console.log(cmd_l);
+            console.log(cmd_r);
+
+            window.ledCharacteristic.writeValue(
+                cmd_l
+            ).catch(error => {
+                uiStatusError(makeErrorMsg(error), false);
+            });
+
+            window.ledCharacteristic.writeValue(
+                cmd_r
+            ).catch(error => {
+                uiStatusError(makeErrorMsg(error), false);
+            });
+        }
+    }
+    elem.addEventListener('click', function () {
+        throttle(rangeValue(elem), 500)
+    });
+})
+
+ 
+//停止
+window.addEventListener('load', function () {
+    var elem = document.getElementById('lid_stop');
+    var rangeValue = function (elem) {
+        return function (evt) {
+            //0 byte目：モータ制御コマンド [1] 固定
+            //1 byte目：モータNo [0, 1]　
+            //2 byte目：モータ回転速度 [-100～100]
+            var cmd_l = new Uint8Array([0x01, 0x00, 0]);
+            var cmd_r = new Uint8Array([0x01, 0x01, 0]);
+            console.log(cmd_l);
+            console.log(cmd_r);
+
+            window.ledCharacteristic.writeValue(
+                cmd_l
+            ).catch(error => {
+                uiStatusError(makeErrorMsg(error), false);
+            });
+
+            window.ledCharacteristic.writeValue(
+                cmd_r
+            ).catch(error => {
+                uiStatusError(makeErrorMsg(error), false);
+            });
+        }
+    }
+    elem.addEventListener('click', function () {
+        throttle(rangeValue(elem), 500)
+        var throttle_range = document.getElementById('throttle');
+        var throttle_value = document.getElementById('throttle_value');
+
+        // 画面上の値も0にする
+        throttle_range.value = 0;
+        throttle_value.innerHTML = 0;
+    });
+})
+
 
 // イベントを間引く
 var throttle = (function (callback, interval = 256) {
