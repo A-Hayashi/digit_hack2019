@@ -17,6 +17,8 @@ from pygame.locals import *
 import sys
 
 IMAGE_WIDTH = 500
+DETECT_TH   = 10
+
 g_radius = 0
 g_center = (0, 0)
 lock = threading.Lock()
@@ -99,20 +101,20 @@ def tracking():
         
         
         if state == 0x02:
-            if radius > 20:
-                print("radius > 20")
+            if radius > DETECT_TH:
+                print("red object is detected.")
                 x = center[0]
                 diff = x - IMAGE_WIDTH/2
             
                 print(diff)
                 time.sleep(0.1)
-                if diff > 20:
+                if diff > 10:
                     turn_right(ser)
-                    time.sleep(0.1)
+                    time.sleep(0.04)
                     stop(ser)
-                elif diff < -20:
+                elif diff < -10:
                     turn_left(ser)
-                    time.sleep(0.1)
+                    time.sleep(0.04)
                     stop(ser)
                 else:
                     forward(ser)
@@ -204,7 +206,7 @@ def detect():
             center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
 
             # only proceed if the radius meets a minimum size
-            if radius > 20:    
+            if radius > DETECT_TH:    
                 # draw the circle and centroid on the frame,
                 # then update the list of tracked points
                 cv2.circle(frame, (int(x), int(y)), int(radius),
