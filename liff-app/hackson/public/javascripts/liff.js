@@ -410,7 +410,7 @@ window.addEventListener('load', function () {
             //1 byte目：サーボNo [0～2]
             //2 byte目：サーボ角度 [0度～180度]
             //3 byte目：サーボ回転速度 [0～100]
-            var cmd = new Uint8Array([0x02, 0x02, 150, 1]);
+            var cmd = new Uint8Array([0x02, 0x02, 110, 1]);
             console.log(cmd);
 
             window.ledCharacteristic.writeValue(
